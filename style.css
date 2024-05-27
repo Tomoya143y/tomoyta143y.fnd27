@@ -114,7 +114,7 @@ p {
 }
 
 .card {
-    height: 500px;
+    height: 150px;
     width: 300px;
     margin-right:10px ;
     border-radius: 5px;
@@ -135,17 +135,23 @@ p {
 
 
 .card_titleInput{
-    margin:10px ;
+    margin-top: 10px;
     font-size: 16px;
     position: absolute;
     visibility: hidden;
-
+    height: 20px;
+    width: 100%;
+    display: inline-block;
 }
 
 .card_title{
-    margin:10px;
+    margin-top: 10px;
+    margin-left: 10px;
     font-size: 16px;
     position: absolute;
+    height: 20px;
+    width: 90%;
+    display: inline-block;
 }
 
 .card_detailContainer{
@@ -157,19 +163,34 @@ p {
     border-radius: 5px;
 }
 
-.cardDetailsBox{
+.card_detailsBox{
     width: 100%;
     height: 30px;
     margin-bottom: 10px;
     border-radius: 5px;
     background-color: rgba(228, 220, 220, 0.786);
+    position: relative;
 }
 
-.cardDetails{
+.edit_detail{
+    width: 100%;
+    height: 100%;
     padding-top: 5px;
-    padding-left: 10px;
     text-align:left;
     font-weight: 100;
+    position: absolute;
+    visibility: hidden;
+    background-color: brown;
+    display: inline-block;
+}
+
+.card_details{
+    width:100%;
+    height: 100%;
+    text-align:left;
+    font-weight: 100;
+    display: inline-block;
+    position: absolute;
 }
 
 .addDetailsBox{
@@ -185,7 +206,6 @@ p {
     text-align:left;
     font-weight: 100;
 }
-
 
 
 
