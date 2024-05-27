@@ -48,123 +48,187 @@ for (let i = 0; i < menuArray.length; i++) {
     )
 }
 
-//もう一つリストを追加ボタンを押す
-//カードのdivを作成or取得
-//タイトルのh2要素を作成or取得
-//タイトルの編集ボックスを作成or取得
-//カード内のコンテナdivを作成or取得
-//カード内の詳細ボックスを作成or取得
-//カード内の詳細
+//1枚目のカードのオブジェクトを取得
+const firstCard = document.getElementsByClassName("card")[0];
+const firstCardTitle = document.getElementsByClassName("card_title")[0];
+const firstCardTitleEdit = document.getElementsByClassName("card_titleInput")[0];
+const firstAddDetailsBox = document.getElementsByClassName("addDetailsBox")[0];
+const firstCard_detailContainer = document.getElementsByClassName("card_detailContainer")[0];
+const firstCardDetailsBox = document.getElementsByClassName("card_detailsBox")[0];
+const firstCardDetails = document.getElementsByClassName("card_details")[0];
+const firstEditDetails = document.getElementsByClassName("edit_detail")[0];
+
+//カード内のタイトルを編集するイベントリスナー
+const editTitleVisible = (cardTitleElm, editTitleElm) => {
+    cardTitleElm.addEventListener("click",
+        () => {
+            editTitleElm.style.visibility = "visible";
+            cardTitleElm.style.visibility = "hidden";
+        }
+    )
+}
+
+//カード内のタイトル編集をオフにするイベントリスナー
+const editTitleVisibleOff = (cardTitleElm, editTitleElm) => {
+    editTitleElm.addEventListener("keydown",
+        (e) => {
+            if (e.key === "Enter") {
+                cardTitleElm.innerText = editTitleElm.value;
+                editTitleElm.style.visibility = "hidden";
+                cardTitleElm.style.visibility = "visible";
+            }
+        }
+    )
+}
+
+//カード内の詳細を編集するイベントリスナー
+const editDetailOn = (detailElm, editDetailElm) => {
+    detailElm.addEventListener("click",
+        () => {
+            editDetailElm.style.visibility = "visible";
+            detailElm.style.visibility = "hidden";
+        }
+    )
+}
+
+//カード内の詳細編集をオフにするイベントリスナー
+const editDetailOff = (detailElm, editDetailElm) => {
+    editDetailElm.addEventListener("keydown",
+        (e) => {
+            if (e.key === "Enter") {
+                detailElm.innerText = editDetailElm.value;
+                editDetailElm.style.visibility = "hidden";
+                detailElm.style.visibility = "visible";
+            }
+        }
+    )
+}
 
 
-//divタグcontentsC内のカードとイベントを複製
+//要素を作成しクラス名をつける関数
+const createElement = (element, className) => {
+    const paragraph = document.createElement(element);
+    paragraph.className = className;
+    return paragraph
+}
+
+//カード内の要素を作成する関数
+const addDetail = (addDetailsBox,card_detailContainer,card,num) => {
+    let clickCounter = 0;
+    console.log(num);
+    addDetailsBox.addEventListener("click",
+        () => {
+            
+            clickCounter = clickCounter + 1;
+            const NewCard_detailsBox = createElement("div", "card_detailsBox");
+            const NewCard_Details = createElement("h4", "card_details");
+            const NewCard_EditDetail = createElement("input", "edit_detail");
+            card_detailContainer.appendChild(NewCard_detailsBox);
+            NewCard_detailsBox.appendChild(NewCard_Details);
+            NewCard_detailsBox.appendChild(NewCard_EditDetail);
+            card_detailContainer.appendChild(addDetailsBox);
+            card.style.height = `${150 + (40 * clickCounter)}px`;
+            editDetailOn(NewCard_Details, NewCard_EditDetail);
+            editDetailOff(NewCard_Details, NewCard_EditDetail);
+
+        }
+    )
+
+}
+
+
+//1枚目のカード内のオブジェクトにイベントリスナーを追加
+editTitleVisible(firstCardTitle, firstCardTitleEdit);
+editTitleVisibleOff(firstCardTitle, firstCardTitleEdit);
+addDetail(firstAddDetailsBox, firstCard_detailContainer, firstCard);
+editDetailOn(firstCardDetails, firstEditDetails);
+editDetailOff(firstCardDetails, firstEditDetails);
+
+//カードを配置するchildContainerの要素を取得
 const childContainer = document.getElementById("childContainer");
 const addCardBtn = document.getElementById("card_add");
-addCardBtn.addEventListener("click",
+
+
+//+カードを生成する関数
+const addCard = (num) => {
+
+    const card = createElement("div", "card");
+    const card_title = createElement("h2", "card_title");
+    card_title.innerText = "Title";
+    const card_titleInput = createElement("input", "card_titleInput");
+    card_titleInput.value = "input_title";
+    const card_detailContainer = createElement("div", "card_detailContainer");
+    const card_detailsBox = createElement("div", "card_detailsBox");
+    const card_Details = createElement("h4", "card_details");
+    const edit_detail = createElement("input", "edit_detail");
+    const addDetailsBox = createElement("div", "addDetailsBox");
+    const addDetails = createElement("h4", "addDetails");
+    addDetails.innerText = "+カードの追加";
+    //作成した要素にイベントリスナーを追加する
+    editTitleVisible(card_title, card_titleInput);
+    editTitleVisibleOff(card_title, card_titleInput);
+    editDetailOn(card_Details, edit_detail);
+    editDetailOff(card_Details, edit_detail);
+    addDetail(addDetailsBox, card_detailContainer, card,num);
+    //作成した要素を各要素に追加       
+    childContainer.appendChild(card);
+    card.appendChild(card_title);
+    card.appendChild(card_titleInput);
+    card.appendChild(card_detailContainer);
+    card_detailContainer.appendChild(card_detailsBox);
+    card_detailsBox.appendChild(card_Details);
+    card_detailsBox.appendChild(edit_detail);
+    card_detailContainer.appendChild(addDetailsBox);
+    addDetailsBox.appendChild(addDetails);
+    childContainer.appendChild(addCardBtn);
+}
+
+//+カードの追加を押すと要素を生成    
+addCardBtn.addEventListener("click", addCard)
+
+const DB =
+    [
+        {
+            title: "自己紹介",
+            memo: ["名前 山口智也", "出身地 愛知県豊田市", "住所 名古屋市昭和区",
+                "家族 妻と保護猫2引", "職場 上郷エンジン鋳造部"]
+        },
+        {
+            title: "仕事内容",
+            memo: ["職場のDX関連の困りごと改善", "出来ること PowerPlatform全般"]
+        }
+    ]
+
+const DBswitch = document.getElementsByClassName("DB")[0];
+DBswitch.addEventListener("click",
     () => {
-        const card = document.getElementsByClassName("card");
-        const cloneCard = card[card.length - 1].cloneNode(true);
-        childContainer.appendChild(cloneCard);
-        const lastIndex = card.length - 1;
-        childContainer.appendChild(addCardBtn);
-        editCardDetails(card[lastIndex]);
-        editTitleVisible(lastIndex);
-        editTitleVisibleOff(lastIndex);
-        addDetail(lastIndex);
+        for (let i = 0; i <= DB.length - 1; i++) {
+            addCard(DB[i].memo.length);
+        }
     }
 )
 
 
+// //職場紹介のコンテナを表示
+// function visibleWorkPlace() {
+//     const contentsWorkPlace = document.querySelector("#childA_1");
+//     const contentsA = document.querySelector("#childA");
+//     contentsA.style.visibility = "hidden";
+//     contentsWorkPlace.style.visibility = "visible"
+// }
+// const WorkPlace = document.querySelector("#workplace");
+// WorkPlace.addEventListener("click", visibleWorkPlace);
 
+// //職場紹介のコンテナを非表示
+// function invisibleWorkPlace() {
+//     const contentsWorkPlace = document.querySelector("#childA_1");
+//     const contentsA = document.querySelector("#childA");
+//     contentsA.style.visibility = "visible";
+//     contentsWorkPlace.style.visibility = "hidden";
+// }
+// const re = document.querySelector("#return");
+// re.addEventListener("click", invisibleWorkPlace);
 
-//contentsC カード内のタイトルを編集する
-function editTitleVisible(i) {
-    const classCardTitleArray = document.getElementsByClassName("card_title");
-    classCardTitleArray[i].addEventListener("click",
-        () => {
-            const title = document.getElementsByClassName("card_titleInput");
-            title[i].style.visibility = "visible";
-            classCardTitleArray[i].style.visibility = "hidden";
-        }
-    )
-}
-editTitleVisible(0);
-
-//contentsC カード内のタイトル編集をオフにする
-function editTitleVisibleOff(i) {
-    const editTitleBoxArray = document.getElementsByClassName("card_titleInput");
-    editTitleBoxArray[i].addEventListener("keydown",
-        (e) => {
-            if (e.key === "Enter") {
-                const classCardTitleArray = document.getElementsByClassName("card_title");
-                classCardTitleArray[i].innerHTML = 
-                `<h2 class = "card_title">${editTitleBoxArray[i].value}</h2>`;
-                editTitleBoxArray[i].style.visibility = "hidden";
-                classCardTitleArray[i].style.visibility = "visible";
-            }
-        }
-    )
-
-}
-editTitleVisibleOff(0);
-
-// カード内の要素を編集
-function editCardDetails(card) {
-    const detailBoxArray = card.getElementsByClassName("cardDetailsBox");
-    for (let i = 0; i <= detailBoxArray.length - 1; i++) {
-        detailBoxArray[i].addEventListener("click",
-            () => {
-                console.log(detailBoxArray[0] + "??" + detailBoxArray[i]);
-            }
-        )
-    }
-}
-editCardDetails(document.getElementsByClassName("card")[0]);
-
-
-//カード内の要素を作成
-function addDetail(index) {
-    const addDetailsBoxArray = document.getElementsByClassName("addDetailsBox");
-    addDetailsBoxArray[index].addEventListener("click",
-        () => {
-            const detailsContainer = document.getElementsByClassName("card_detailContainer")[index];
-            const detailbox = detailsContainer.getElementsByClassName("cardDetailsBox")[0];
-            const details = detailbox.getElementsByClassName("cardDetails")[0];
-            const cloneDetailBox = detailbox.cloneNode(false);
-            const cloneDetail = details.cloneNode(false);
-            cloneDetail.innerHTML = `<h4 class = "cardDetails"></h4>`;
-            cloneDetailBox.appendChild(cloneDetail);
-            detailsContainer.appendChild(cloneDetailBox);
-            detailsContainer.appendChild(addDetailsBoxArray[index]);
-        }
-    )
-
-}
-addDetail(0);
-
-
-
-
-
-//職場紹介のコンテナを表示
-function visibleWorkPlace() {
-    const contentsWorkPlace = document.querySelector("#childA_1");
-    const contentsA = document.querySelector("#childA");
-    contentsA.style.visibility = "hidden";
-    contentsWorkPlace.style.visibility = "visible"
-}
-const WorkPlace = document.querySelector("#workplace");
-WorkPlace.addEventListener("click", visibleWorkPlace);
-
-//職場紹介のコンテナを非表示
-function invisibleWorkPlace() {
-    const contentsWorkPlace = document.querySelector("#childA_1");
-    const contentsA = document.querySelector("#childA");
-    contentsA.style.visibility = "visible";
-    contentsWorkPlace.style.visibility = "hidden";
-}
-const re = document.querySelector("#return");
-re.addEventListener("click", invisibleWorkPlace);
 
 
 
