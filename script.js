@@ -58,6 +58,7 @@ const firstCardDetailsBox = document.getElementsByClassName("card_detailsBox")[0
 const firstCardDetails = document.getElementsByClassName("card_details")[0];
 const firstEditDetails = document.getElementsByClassName("edit_detail")[0];
 
+
 //カード内のタイトルを編集するイベントリスナー
 const editTitleVisible = (cardTitleElm, editTitleElm) => {
     cardTitleElm.addEventListener("click",
@@ -113,12 +114,10 @@ const createElement = (element, className) => {
 }
 
 //カード内の要素を作成する関数
-const addDetail = (addDetailsBox,card_detailContainer,card,num) => {
+const addDetail = (addDetailsBox, card_detailContainer, card,cardHeight) => {
     let clickCounter = 0;
-    console.log(num);
     addDetailsBox.addEventListener("click",
         () => {
-            
             clickCounter = clickCounter + 1;
             const NewCard_detailsBox = createElement("div", "card_detailsBox");
             const NewCard_Details = createElement("h4", "card_details");
@@ -127,10 +126,9 @@ const addDetail = (addDetailsBox,card_detailContainer,card,num) => {
             NewCard_detailsBox.appendChild(NewCard_Details);
             NewCard_detailsBox.appendChild(NewCard_EditDetail);
             card_detailContainer.appendChild(addDetailsBox);
-            card.style.height = `${150 + (40 * clickCounter)}px`;
+            card.style.height = `${cardHeight + (40 * clickCounter)}px`;
             editDetailOn(NewCard_Details, NewCard_EditDetail);
             editDetailOff(NewCard_Details, NewCard_EditDetail);
-
         }
     )
 
@@ -140,7 +138,7 @@ const addDetail = (addDetailsBox,card_detailContainer,card,num) => {
 //1枚目のカード内のオブジェクトにイベントリスナーを追加
 editTitleVisible(firstCardTitle, firstCardTitleEdit);
 editTitleVisibleOff(firstCardTitle, firstCardTitleEdit);
-addDetail(firstAddDetailsBox, firstCard_detailContainer, firstCard);
+addDetail(firstAddDetailsBox, firstCard_detailContainer, firstCard,150);
 editDetailOn(firstCardDetails, firstEditDetails);
 editDetailOff(firstCardDetails, firstEditDetails);
 
@@ -150,42 +148,76 @@ const addCardBtn = document.getElementById("card_add");
 
 
 //+カードを生成する関数
-const addCard = (num) => {
-
+const addCard = (memo,title) => {
+    //カードの外枠とタイトル、中枠を作成
     const card = createElement("div", "card");
     const card_title = createElement("h2", "card_title");
-    card_title.innerText = "Title";
     const card_titleInput = createElement("input", "card_titleInput");
     card_titleInput.value = "input_title";
     const card_detailContainer = createElement("div", "card_detailContainer");
-    const card_detailsBox = createElement("div", "card_detailsBox");
-    const card_Details = createElement("h4", "card_details");
-    const edit_detail = createElement("input", "edit_detail");
-    const addDetailsBox = createElement("div", "addDetailsBox");
-    const addDetails = createElement("h4", "addDetails");
-    addDetails.innerText = "+カードの追加";
-    //作成した要素にイベントリスナーを追加する
+    //DBのタイトルが引数にあればタイトルに表示
+    if(typeof(title) === "string"){
+        card_title.innerText = `${title}`;
+    }else {card_title.innerText = "Title"};
+    //作成したタイトルにイベントリスナを設定
     editTitleVisible(card_title, card_titleInput);
     editTitleVisibleOff(card_title, card_titleInput);
-    editDetailOn(card_Details, edit_detail);
-    editDetailOff(card_Details, edit_detail);
-    addDetail(addDetailsBox, card_detailContainer, card,num);
-    //作成した要素を各要素に追加       
+    //作成した外枠とタイトル中枠を追加    
     childContainer.appendChild(card);
     card.appendChild(card_title);
     card.appendChild(card_titleInput);
     card.appendChild(card_detailContainer);
-    card_detailContainer.appendChild(card_detailsBox);
-    card_detailsBox.appendChild(card_Details);
-    card_detailsBox.appendChild(edit_detail);
+    //カードの高さを初期化
+    let cardHeight =0;
+    if (typeof (memo.length) === "number") {
+        for (let i = 0; i <= memo.length-1; i++) {
+            //子要素を作成
+            const card_detailsBox = createElement("div", "card_detailsBox");
+            const card_Details = createElement("h4", "card_details");
+            const edit_detail = createElement("input", "edit_detail");
+            //DBのmemoの要素を表示
+            card_Details.innerText = `${memo[i]}`
+            //子要素にイベントリスナを設定    
+            editDetailOn(card_Details, edit_detail);
+            editDetailOff(card_Details, edit_detail);
+            //子要素を中枠に追加
+            card_detailContainer.appendChild(card_detailsBox);
+            card_detailsBox.appendChild(card_Details);
+            card_detailsBox.appendChild(edit_detail);
+            cardHeight = (i*40);
+        }
+    } else {
+        //子要素を作成
+        const card_detailsBox = createElement("div", "card_detailsBox");
+        const card_Details = createElement("h4", "card_details");
+        const edit_detail = createElement("input", "edit_detail");
+        //子要素にイベントリスナを設定    
+        editDetailOn(card_Details, edit_detail);
+        editDetailOff(card_Details, edit_detail);
+        //子要素を中枠に追加
+        card_detailContainer.appendChild(card_detailsBox);
+        card_detailsBox.appendChild(card_Details);
+        card_detailsBox.appendChild(edit_detail);
+       
+    }
+    cardHeight = 150+cardHeight;
+    card.style.height = `${cardHeight}px`;
+    //子要素の追加ボタンを作成
+    const addDetailsBox = createElement("div", "addDetailsBox");
+    const addDetails = createElement("h4", "addDetails");
+    //追加ボタンのイベントリスナを設定
+    addDetail(addDetailsBox, card_detailContainer, card,cardHeight);
+    addDetails.innerText = "+カードの追加";
+    //追加ボタンを中枠最後に追加    
     card_detailContainer.appendChild(addDetailsBox);
     addDetailsBox.appendChild(addDetails);
+    //カードの追加ボタンを最後へ移動
     childContainer.appendChild(addCardBtn);
 }
 
-//+カードの追加を押すと要素を生成    
-addCardBtn.addEventListener("click", addCard)
 
+//+カードの追加を押すと要素を生成    
+addCardBtn.addEventListener("click", addCard);
 const DB =
     [
         {
@@ -203,9 +235,12 @@ const DBswitch = document.getElementsByClassName("DB")[0];
 DBswitch.addEventListener("click",
     () => {
         for (let i = 0; i <= DB.length - 1; i++) {
-            addCard(DB[i].memo.length);
+            addCard(DB[i].memo,DB[i].title);
         }
+        firstCard.style.visibility = "hidden";
+        firstCard.style.width = `${0}px`;
     }
+   
 )
 
 
