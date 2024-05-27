@@ -90,7 +90,7 @@ const addDetail = (addDetailsBox, card_detailContainer, card,cardHeight) => {
             NewCard_detailsBox.appendChild(NewCard_Details);
             NewCard_detailsBox.appendChild(NewCard_EditDetail);
             card_detailContainer.appendChild(addDetailsBox);
-            card.style.height = `${cardHeight + (40 * clickCounter)}px`;
+            card.style.height = `${cardHeight + (70 * clickCounter)}px`;
             editDetailOn(NewCard_Details, NewCard_EditDetail);
             editDetailOff(NewCard_Details, NewCard_EditDetail);
         }
@@ -122,7 +122,8 @@ const addCard = (memo,title) => {
     //DBのタイトルが引数にあればタイトルに表示
     if(typeof(title) === "string"){
         card_title.innerText = `${title}`;
-    }else {card_title.innerText = "Title"};
+        card_titleInput.value =  `${title}`;
+    }else {card_title.innerText = "Title"}
     //作成したタイトルにイベントリスナを設定
     editTitleVisible(card_title, card_titleInput);
     editTitleVisibleOff(card_title, card_titleInput);
@@ -140,7 +141,8 @@ const addCard = (memo,title) => {
             const card_Details = createElement("h4", "card_details");
             const edit_detail = createElement("input", "edit_detail");
             //DBのmemoの要素を表示
-            card_Details.innerText = `${memo[i]}`
+            card_Details.innerText = `${memo[i]}`;
+            edit_detail.value = `${memo[i]}`;
             //子要素にイベントリスナを設定    
             editDetailOn(card_Details, edit_detail);
             editDetailOff(card_Details, edit_detail);
@@ -148,7 +150,7 @@ const addCard = (memo,title) => {
             card_detailContainer.appendChild(card_detailsBox);
             card_detailsBox.appendChild(card_Details);
             card_detailsBox.appendChild(edit_detail);
-            cardHeight = (i*40);
+            cardHeight = (i*70);
         }
     } else {
         //子要素を作成
@@ -211,8 +213,12 @@ const DB =
         {
             title: "仕事内容",
             memo: ["職場のDX関連の困りごと改善", "出来ること PowerPlatform全般"]
+        },
+        {
+            title:"なぜDIGを受講したのか",
+            memo: ["PowerPlatformだけで出来ることに限りがあるから",
+                "現場で使うデジタルアイテムは現場で作りたい",
+                "スキルを身に着けて出来ることを増やしたい"
+            ]
         }
     ]
-
-
-
