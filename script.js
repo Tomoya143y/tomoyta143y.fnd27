@@ -7,46 +7,10 @@ const winHeight = window.parent.innerHeight
 
 //main-containerのサイズを定義
 const mainContainer = document.getElementById("main-container");
+const mainBord = document.getElementById("mainBord");
 mainContainer.style.width = `${winWidth}px`;
 mainContainer.style.height = winHeight;
-document.getElementById("contents-section").style.width = `${winWidth - 300}px`;
-
-
-
-//menuのクリックされたliタグのid名を取得し、変数clickedMenuIdに格納
-let clickedMenuId
-const menuArray = document.getElementsByClassName("menu");
-for (let i = 0; i < menuArray.length; i++) {
-    menuArray[i].addEventListener("click", () => {
-        clickedMenuId = menuArray[i].id;
-        //クリックされたliタグのid名と同じ名前を持つclassに対しての処理
-        const selectClassArray = document.querySelectorAll("." + clickedMenuId);
-        for (const element of selectClassArray) {
-            element.style.visibility = "visible";
-        }
-        let parentIdName = "#parent" + clickedMenuId.substring(8);
-        document.querySelector(parentIdName).style.width
-            = `${winWidth - 300}px`;
-
-        //クリックされていないliタグのid名を配列に格納
-        const noClickedMenuArrayId = [];
-        for (let i = 0; i < menuArray.length; i++) {
-            if (menuArray[i].id !== clickedMenuId) {
-                noClickedMenuArrayId.push(menuArray[i].id);
-            }
-        }
-        //クリックされていないliタグのid名と同じ名前を持つclassに対しての処理
-        for (const elementId of noClickedMenuArrayId) {
-            const selectClassArray = document.querySelectorAll("." + elementId);
-            for (const element of selectClassArray) {
-                element.style.visibility = "hidden";
-            }
-            let parentIdName = "#parent" + elementId.substring(8);
-            document.querySelector(parentIdName).style.width = `${0}px`;
-        }
-    }
-    )
-}
+document.getElementById("childContainer").style.width = `${winWidth - 300}px`;
 
 //1枚目のカードのオブジェクトを取得
 const firstCard = document.getElementsByClassName("card")[0];
@@ -113,7 +77,7 @@ const createElement = (element, className) => {
     return paragraph
 }
 
-//カード内の要素を作成する関数
+//カード内の要素を作成するイベントリスナー
 const addDetail = (addDetailsBox, card_detailContainer, card,cardHeight) => {
     let clickCounter = 0;
     addDetailsBox.addEventListener("click",
@@ -147,7 +111,7 @@ const childContainer = document.getElementById("childContainer");
 const addCardBtn = document.getElementById("card_add");
 
 
-//+カードを生成する関数
+//カードを生成する関数
 const addCard = (memo,title) => {
     //カードの外枠とタイトル、中枠を作成
     const card = createElement("div", "card");
@@ -216,8 +180,27 @@ const addCard = (memo,title) => {
 }
 
 
-//+カードの追加を押すと要素を生成    
+//カードの追加を押すと要素を生成    
 addCardBtn.addEventListener("click", addCard);
+
+//データベース読み込み
+const DBswitch = document.getElementsByClassName("DB")[0];
+DBswitch.addEventListener("click",
+    () => {
+        for (let i = 0; i <= DB.length - 1; i++) {
+            addCard(DB[i].memo,DB[i].title);
+        }
+        firstCard.style.visibility = "hidden";
+        firstCard.style.width = `${0}px`;
+        document.getElementById("menu-list").style.visibility = "visible";
+    }
+   
+)
+
+
+
+
+//データベース
 const DB =
     [
         {
@@ -230,41 +213,6 @@ const DB =
             memo: ["職場のDX関連の困りごと改善", "出来ること PowerPlatform全般"]
         }
     ]
-
-const DBswitch = document.getElementsByClassName("DB")[0];
-DBswitch.addEventListener("click",
-    () => {
-        for (let i = 0; i <= DB.length - 1; i++) {
-            addCard(DB[i].memo,DB[i].title);
-        }
-        firstCard.style.visibility = "hidden";
-        firstCard.style.width = `${0}px`;
-    }
-   
-)
-
-
-// //職場紹介のコンテナを表示
-// function visibleWorkPlace() {
-//     const contentsWorkPlace = document.querySelector("#childA_1");
-//     const contentsA = document.querySelector("#childA");
-//     contentsA.style.visibility = "hidden";
-//     contentsWorkPlace.style.visibility = "visible"
-// }
-// const WorkPlace = document.querySelector("#workplace");
-// WorkPlace.addEventListener("click", visibleWorkPlace);
-
-// //職場紹介のコンテナを非表示
-// function invisibleWorkPlace() {
-//     const contentsWorkPlace = document.querySelector("#childA_1");
-//     const contentsA = document.querySelector("#childA");
-//     contentsA.style.visibility = "visible";
-//     contentsWorkPlace.style.visibility = "hidden";
-// }
-// const re = document.querySelector("#return");
-// re.addEventListener("click", invisibleWorkPlace);
-
-
 
 
 
