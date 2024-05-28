@@ -264,7 +264,7 @@ const DB =
             title: "趣味",
             memo: [
                 { text: "音楽鑑賞 DJ", img: "IMG_0094.jpg" },
-                { text: "料理" },
+                { text: "料理" , img: "IMG_3869.heic"},
                 { text: "散歩" },
                 { text: "バスケの試合観戦(NBA)" }
 
@@ -305,7 +305,9 @@ const DB =
         },
         {
             title: "苦戦したこと",
-            memo: [{ text: "教育と業務の両立" }]
+            memo: [{ text: "教育と業務の両立" ,
+                text:"初めての制作。　とにかくエラーとの戦いでした。"
+            }]
         },
         {
             title: "今後挑戦したいこと",
