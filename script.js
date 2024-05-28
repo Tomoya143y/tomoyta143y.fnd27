@@ -264,7 +264,7 @@ const DB =
             title: "趣味",
             memo: [
                 { text: "音楽鑑賞 DJ", img: "IMG_0094.jpg" },
-                { text: "料理" , img: "IMG_3869.heic"},
+                { text: "料理" , img: "IMG_3869.jpeg"},
                 { text: "散歩" },
                 { text: "バスケの試合観戦(NBA)" }
 
