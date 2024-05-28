@@ -184,7 +184,7 @@ const addCard = (memo, title) => {
             //子要素にイベントリスナを設定    
             editDetailOn(card_Details, edit_detail);
             editDetailOff(card_Details, edit_detail);
-            attachmentOn(add, card_title.innerText, card_Details.innerText,memo[i].img);
+            attachmentOn(add, card_title.innerText, card_Details.innerText, memo[i].img);
             //子要素を中枠に追加
             card_detailContainer.appendChild(card_detailsBox);
             card_detailsBox.appendChild(card_Details);
@@ -250,19 +250,44 @@ DBswitch.addEventListener("click",
 const DB =
     [
         {
-            title: "自己紹介",
-            memo: [{ text: "名前 山口智也" }, 
-            {text:"趣味 散歩 音楽鑑賞 DJ 料理", img: "IMG_0094.jpg"},
-            { text: "出身地 愛知県豊田市" }, { text: "住所 名古屋市昭和区" },
-            { text: "家族 妻と保護猫2匹" ,img:"IMG_0256.JPG"}, { text: "職場 上郷エンジン鋳造部" }]
+            title: "プロフィール",
+            memo: [
+                { text: "名前 山口智也" },
+                { text: "出身地 愛知県豊田市" },
+                { text: "住所 名古屋市昭和区" },
+                { text: "家族 妻と保護猫2匹", img: "IMG_0256.JPG" },
+                { text: "職場 上郷エンジン鋳造部" },
+                { text: "業務内容 現場向けのDXツール制作、保守保全", img: "apps1.png" }
+            ]
         },
         {
-            title: "仕事内容",
-            memo: [{
-                text: "現場向けのDXツール制作",
-                img: "apps1.png"
-            }
-                , { text: "DX関連の困りごと対応、改善" }]
+            title: "趣味",
+            memo: [
+                { text: "音楽鑑賞 DJ", img: "IMG_0094.jpg" },
+                { text: "料理" },
+                { text: "散歩" },
+                { text: "バスケの試合観戦(NBA)" }
+
+            ]
+        },
+        {
+            titie: "好きなアーティスト",
+            memo: [
+                { text: "Anderson.Paak" },
+                { text: "Alicia keys" },
+                { text: "Craig David" },
+                { text: "Disclosure" },
+                { text: "FKJ" },
+                { text: "Goldlink" },
+                { text: "Surface" },
+                { text: "the1975" },
+                { text: "Justin Timberlake" },
+                { text: "Offspring" },
+                { text: "oasis" },
+                { text: "sum41" },
+                { text: "Green Day" },
+                { text: "Khalid" }
+            ]
         },
         {
             title: "なぜDIGを受講したのか",
