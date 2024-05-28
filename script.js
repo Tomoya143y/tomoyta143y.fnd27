@@ -271,7 +271,7 @@ const DB =
             ]
         },
         {
-            titie: "好きなアーティスト",
+            title: "好きなアーティスト",
             memo: [
                 { text: "Anderson.Paak" },
                 { text: "Alicia keys" },
