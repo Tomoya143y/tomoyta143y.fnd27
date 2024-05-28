@@ -252,7 +252,7 @@ const DB =
         {
             title: "自己紹介",
             memo: [{ text: "名前 山口智也" }, 
-            {text:"趣味 散歩 音楽鑑賞 DJ 料理", img: "IMG_0094.jpg"}
+            {text:"趣味 散歩 音楽鑑賞 DJ 料理", img: "IMG_0094.jpg"},
             { text: "出身地 愛知県豊田市" }, { text: "住所 名古屋市昭和区" },
             { text: "家族 妻と保護猫2匹" ,img:"IMG_0256.JPG"}, { text: "職場 上郷エンジン鋳造部" }]
         },
